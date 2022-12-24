@@ -1,0 +1,48 @@
+<h1>Continue seu cadastro!</h1>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="input-group mb-3">
+        <input formControlName="name" type="text" class="form-control" placeholder="Nome" aria-label="name"
+            aria-describedby="name" />
+    </div>
+
+    <div class="input-group mb-3">
+        <input formControlName="email" type="email" class="form-control" placeholder="Email" aria-label="email"
+            aria-describedby="email" />
+    </div>
+
+    <div class="input-group mb-3">
+        <input formControlName="age" type="number" class="form-control" placeholder="Idade" aria-label="age"
+            aria-describedby="age" />
+    </div>
+
+    <div class="image-block">
+        <img [src]="isDefault ? defaultImage : preview" alt="" class="circle">
+    </div>
+
+    <label for="basic-url">Adicione uma foto ao perfil</label>
+    <div class="input-group mb-3">
+        <input (change)="onChange($event)" type="file" class="form-control" aria-label="imgProfile"
+            aria-describedby="imgProfile" />
+    </div>
+
+    <div class="input-group mb-3">
+        <input formControlName="password" type="password" class="form-control" placeholder="Senha" aria-label="Password"
+            aria-describedby="password" />
+    </div>
+
+    <div class="input-group mb-3">
+        <input formControlName="confirmPassword" type="password" class="form-control" placeholder="Confirmar senha"
+            aria-label="confirmPassword" aria-describedby="confirmPassword" />
+        <br />
+        <div>
+            <p class="warn" *ngIf="form.controls['confirmPassword'].hasError('equalsTo')">As senhas não são iguais!!</p>
+        </div>
+    </div>
+
+    <div class="d-grid gap-2 mt-4">
+        <button class="btn btn-primary btn-continuation-register" type="submit">
+            FINALIZAR CADASTRO
+        </button>
+    </div>
+</form>
