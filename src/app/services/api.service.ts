@@ -10,7 +10,7 @@ import { UtilsService } from './utils.service';
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(private httpClient: HttpClient, private utils: UtilsService) {}
+  constructor(private http: HttpClient, private utils: UtilsService) {}
 
   registerUser(user: any): Observable<RegisterUser> {
     const formData = new FormData();
@@ -22,7 +22,7 @@ export class ApiService {
     formData.append('password', user.password);
     formData.append('confirmPassword', user.confirmPassword);
 
-    return this.httpClient
+    return this.http
       .post<RegisterUser>(
         environment.BASE_URL + '/auth/register/user',
         formData
@@ -47,8 +47,8 @@ export class ApiService {
   }
 
   loginUser(user: any): Observable<LoginUser> {
-    return this.httpClient
-      .post<LoginUser>(environment.BASE_URL + 'auth/login', user)
+    return this.http
+      .post<LoginUser>(environment.BASE_URL + '/auth/login', user)
       .pipe(
         retry(2),
         catchError((err) => {

@@ -6,6 +6,7 @@ import { LoginUser } from 'src/app/interfaces/loginUser';
 import { ApiService } from 'src/app/services/api.service';
 import { LocalstorageService } from 'src/app/services/localstorage.service';
 import { RegisterComplementComponent } from '../register-complement/register-complement.component';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private modal: MatDialog,
     private api: ApiService,
-    private localStorage: LocalstorageService
+    private localStorage: LocalstorageService,
+    private utils: UtilsService
   ) {}
 
   ngOnInit() {
@@ -30,14 +32,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   initForms() {
     this.formRegister = this.fb.group({
-      name: ['Cox', Validators.required],
-      email: ['cox@email.com', [Validators.required, Validators.email]],
-      age: [39, [Validators.required]],
+      name: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
+      age: [null, [Validators.required]],
     });
 
     this.formLogin = this.fb.group({
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]],
+      email: ['cox@email.com ', [Validators.required, Validators.email]],
+      password: ['123', [Validators.required]],
     });
   }
 
@@ -55,6 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   login() {
     if (this.isValidForm()) {
       const { email } = this.createPayLoad();
+
       this.api
         .loginUser(this.createPayLoad())
         .pipe(takeUntil(this.destroy$))
@@ -62,6 +65,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           let { token } = res;
           this.localStorage.setLocalStorage('token', token);
           this.localStorage.setLocalStorage('user', email);
+          this.utils.showSuccess('Login realizado com sucesso!');
         });
     }
   }
@@ -78,6 +82,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       email,
       password,
     };
+
     return payload;
   }
 
