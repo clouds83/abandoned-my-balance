@@ -5,20 +5,16 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedMaterialModule } from './shared/shared-material/shared-material.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RegisterComplementComponent } from './components/register-complement/register-complement.component';
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComplementComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
     SharedMaterialModule,
     HttpClientModule,
     ToastrModule.forRoot({
