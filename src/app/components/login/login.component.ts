@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { LocalstorageService } from 'src/app/services/localstorage.service';
 import { RegisterComplementComponent } from '../register-complement/register-complement.component';
 import { UtilsService } from 'src/app/services/utils.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private modal: MatDialog,
     private api: ApiService,
     private localStorage: LocalstorageService,
-    private utils: UtilsService
+    private utils: UtilsService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -63,11 +65,16 @@ export class LoginComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe((res: LoginUser) => {
           let { token } = res;
-          this.localStorage.setLocalStorage('token', token);
-          this.localStorage.setLocalStorage('user', email);
+          this.localStorage.setLocalStorage('token', JSON.stringify(token));
+          this.localStorage.setLocalStorage('user', JSON.stringify(email));
           this.utils.showSuccess('Login realizado com sucesso!');
+          this.navigateUrl('dashboard');
         });
     }
+  }
+
+  navigateUrl(url: string) {
+    this.router.navigate([`/${url}`]);
   }
 
   isValidForm(): boolean {
