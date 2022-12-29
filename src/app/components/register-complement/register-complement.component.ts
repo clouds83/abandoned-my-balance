@@ -97,7 +97,7 @@ export class RegisterComplementComponent implements OnInit, OnDestroy {
         .subscribe((res: RegisterUser) => {
           this.utils.showSuccess(res.message);
           this.localStorage.setLocalStorage(
-            'userInfo',
+            'userInfo', //TODO só é salvo na criação de usuário
             JSON.stringify(res.user)
           );
           this.refreshPage();
