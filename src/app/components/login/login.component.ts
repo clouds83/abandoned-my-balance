@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
 
     this.formLogin = this.fb.group({
-      email: ['cox@email.com ', [Validators.required, Validators.email]],
+      email: ['cox3@email.com ', [Validators.required, Validators.email]],
       password: ['123', [Validators.required]],
     });
   }
