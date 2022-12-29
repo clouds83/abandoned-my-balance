@@ -4,6 +4,7 @@ import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DownloadImage } from '../interfaces/downloadImage';
 import { LoginUser } from '../interfaces/loginUser';
+import { RegisterIncome } from '../interfaces/registerIncome';
 import { RegisterUser } from '../interfaces/registerUser';
 import { UtilsService } from './utils.service';
 
@@ -87,6 +88,19 @@ export class ApiService {
               'Ocorreu um erro no servidor, tente mais tarde.'
             );
           }
+          return throwError(() => err);
+        })
+      );
+  }
+
+  addIncome(incomeValue: any): Observable<RegisterIncome> {
+    return this.http
+      .post<RegisterIncome>(
+        environment.BASE_URL + '/auth/revenues',
+        incomeValue
+      )
+      .pipe(
+        catchError((err) => {
           return throwError(() => err);
         })
       );
