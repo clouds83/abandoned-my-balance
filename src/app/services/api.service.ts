@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, retry, throwError } from 'rxjs';
+import { catchError, first, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DownloadImage } from '../interfaces/downloadImage';
 import { LoginUser } from '../interfaces/loginUser';
@@ -93,14 +93,36 @@ export class ApiService {
       );
   }
 
-  addIncome(incomeValue: any): Observable<RegisterIncome> {
+  addIncome(value: any): Observable<RegisterIncome> {
     return this.http
-      .post<RegisterIncome>(
-        environment.BASE_URL + '/auth/revenues',
-        incomeValue
-      )
+      .post<RegisterIncome>(environment.BASE_URL + '/auth/revenues', value)
       .pipe(
         catchError((err) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  getIncomeEntry(param: any, user: any): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.set('month', param).set('user', user);
+
+    return this.http
+      .get<any>(environment.BASE_URL + 'list/revenues', { headers: headers })
+      .pipe(
+        first(),
+        catchError((err) => {
+          if (err.status === 0 && err.status !== 404) {
+            this.utils.showError(
+              'Ocorreu um erro na aplicação, tente novamente.'
+            );
+          } else if (err.status === 404) {
+            this.utils.showError(err.error.message);
+          } else {
+            this.utils.showError(
+              'Ocorreu um erro no servidor, tente mais tarde.'
+            );
+          }
           return throwError(() => err);
         })
       );

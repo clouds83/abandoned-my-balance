@@ -17,6 +17,17 @@ import { CardViewComponent } from './card-view/card-view.component';
 import { AddIncomeComponent } from './add-income/add-income.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MonthsIncomeComponent } from './months-income/months-income.component';
+import { CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
+
+export const CustomCurrencyMaskConfig = {
+  align: 'left',
+  allowNegative: true,
+  decimal: ',',
+  precision: 2,
+  prefix: 'R$ ',
+  suffix: '',
+  thousands: '.',
+};
 
 @NgModule({
   declarations: [
@@ -40,6 +51,13 @@ import { MonthsIncomeComponent } from './months-income/months-income.component';
     SharedMaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    CurrencyMaskModule,
+  ],
+  providers: [
+    {
+      provide: CURRENCY_MASK_CONFIG,
+      useValue: CustomCurrencyMaskConfig,
+    },
   ],
 })
 export class DashboardModule {}
