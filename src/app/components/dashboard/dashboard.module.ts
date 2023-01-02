@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { CommonModule, registerLocaleData } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
@@ -18,6 +18,10 @@ import { AddIncomeComponent } from './add-income/add-income.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MonthsIncomeComponent } from './months-income/months-income.component';
 import { CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
+
+import localePt from '@angular/common/locales/pt';
+import { ShortenerPipe } from 'src/app/shared/pipes/shortener.pipe';
+registerLocaleData(localePt, 'pt');
 
 export const CustomCurrencyMaskConfig = {
   align: 'left',
@@ -44,6 +48,7 @@ export const CustomCurrencyMaskConfig = {
     CardViewComponent,
     AddIncomeComponent,
     MonthsIncomeComponent,
+    ShortenerPipe,
   ],
   imports: [
     CommonModule,
@@ -57,6 +62,10 @@ export const CustomCurrencyMaskConfig = {
     {
       provide: CURRENCY_MASK_CONFIG,
       useValue: CustomCurrencyMaskConfig,
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'pt',
     },
   ],
 })

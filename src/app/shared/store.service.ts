@@ -23,6 +23,6 @@ export class StoreService {
   }
 
   getStoreRegisterIncome() {
-    return this.storeRegister.asObservable;
+    return this.storeRegister.asObservable();
   }
 }

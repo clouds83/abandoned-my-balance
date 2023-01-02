@@ -28,7 +28,5 @@ export class MessageHourComponent implements OnInit {
       return;
     }
     this.messageHour.emit('boa noite.');
-
-    console.log(hour);
   }
 }

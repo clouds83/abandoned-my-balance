@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { ListIncome } from 'src/app/interfaces/listIncome';
+import { ApiService } from 'src/app/services/api.service';
+import { LocalstorageService } from 'src/app/services/localstorage.service';
+import { StoreService } from 'src/app/shared/store.service';
 import { AddIncomeComponent } from '../add-income/add-income.component';
 
 @Component({
@@ -7,8 +13,78 @@ import { AddIncomeComponent } from '../add-income/add-income.component';
   templateUrl: './income-list.component.html',
   styleUrls: ['./income-list.component.scss'],
 })
-export class IncomeListComponent {
-  constructor(private dialog: MatDialog) {}
+export class IncomeListComponent implements OnInit, AfterViewInit {
+  selectedMonth!: string;
+  user!: string;
+  loading = false;
+  emptyResult = false;
+  arrIncome: any[] = [];
+  public dataSource = new MatTableDataSource<any>();
+  displayedColumns: string[] = [
+    'tipoReceita',
+    'valor',
+    'dataEntrada',
+    '_id',
+    'acoes',
+  ];
+  @ViewChild('paginator') paginator!: MatPaginator;
+
+  constructor(
+    private dialog: MatDialog,
+    private store: StoreService,
+    private localStorage: LocalstorageService,
+    private api: ApiService
+  ) {}
+
+  ngOnInit() {
+    this.store.getStoreRegisterIncome().subscribe((res) => {
+      if (res) {
+        this.getIncomeList(this.selectedMonth);
+      }
+    });
+  }
+
+  ngAfterViewInit() {
+    this.store.getStoreMonth().subscribe((res) => {
+      this.selectedMonth = res;
+    });
+    this.getIncomeList(this.selectedMonth);
+  }
+
+  getIncomeList(selectedMonth: string) {
+    this.user = this.localStorage.getLocalStorage('user');
+    this.api
+      .getIncomeEntry(selectedMonth, this.user)
+      .subscribe((res: ListIncome) => {
+        this.loading = true;
+        console.log('loading ->', this.loading);
+
+        let arr: any[] = [];
+
+        if (res.result.length === 0) {
+          this.emptyResult = true;
+          this.arrIncome = [];
+        } else {
+          this.emptyResult = false;
+          this.arrIncome = arr;
+
+          setTimeout(() => {
+            this.dataSource.paginator = this.paginator;
+          }, 2001);
+          res.result.forEach((element: any) => {
+            arr.push(element.user.month.listMonth);
+          });
+        }
+
+        setTimeout(() => {
+          this.dataSource.data = arr;
+          this.dataSource.paginator = this.paginator;
+          this.loading = false;
+
+          console.log('loading ->', this.loading);
+        });
+      });
+  }
 
   openDialog() {
     this.dialog.open(AddIncomeComponent, {

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, first, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DownloadImage } from '../interfaces/downloadImage';
+import { ListIncome } from '../interfaces/listIncome';
 import { LoginUser } from '../interfaces/loginUser';
 import { RegisterIncome } from '../interfaces/registerIncome';
 import { RegisterUser } from '../interfaces/registerUser';
@@ -103,12 +104,14 @@ export class ApiService {
       );
   }
 
-  getIncomeEntry(param: any, user: any): Observable<any> {
+  getIncomeEntry(param: any, user: any): Observable<ListIncome> {
     let headers = new HttpHeaders();
     headers = headers.set('month', param).set('user', user);
 
     return this.http
-      .get<any>(environment.BASE_URL + 'list/revenues', { headers: headers })
+      .get<ListIncome>(environment.BASE_URL + '/list/revenues', {
+        headers: headers,
+      })
       .pipe(
         first(),
         catchError((err) => {
