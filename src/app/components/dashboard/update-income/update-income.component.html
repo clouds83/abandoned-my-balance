@@ -1,0 +1,24 @@
+<form [formGroup]="form">
+    <div class="form-group">
+        <label for="typeRevenue">Tipo de Receita</label>
+
+        <select formControlName="typeRevenue" [(ngModel)]="typeRevenue" name="typeRevenue" id="typeRevenue"
+            class="form-control">
+            <option *ngFor="let income of incomeList" [selected]="income.name === typeRevenue">
+                <span>{{income.name}}</span>
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="value">Valor</label>
+        <input formControlName="value" type="text" class="form-control" id="value" name="value" aria-describedby="value"
+            currencyMask />
+    </div>
+    <div class="form-group">
+        <label for="dateEntry">Data de Entrada</label>
+        <input formControlName="dateEntry" type="date" class="form-control" id="dateEntry" name="dateEntry"
+            aria-describedby="dateEntry" onkeydown="return false" />
+    </div>
+    <button class="btn btn-primary">Atualizar Receita</button>
+</form>

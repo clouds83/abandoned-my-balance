@@ -2,11 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, first, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { DeleteIncome } from '../interfaces/deleteIncome';
 import { DownloadImage } from '../interfaces/downloadImage';
 import { ListIncome } from '../interfaces/listIncome';
 import { LoginUser } from '../interfaces/loginUser';
 import { RegisterIncome } from '../interfaces/registerIncome';
 import { RegisterUser } from '../interfaces/registerUser';
+import { UpdateIncome } from '../interfaces/updateIncome';
 import { UtilsService } from './utils.service';
 
 @Injectable({
@@ -114,6 +116,51 @@ export class ApiService {
       })
       .pipe(
         first(),
+        catchError((err) => {
+          if (err.status === 0 && err.status !== 404) {
+            this.utils.showError(
+              'Ocorreu um erro na aplicação, tente novamente.'
+            );
+          } else if (err.status === 404) {
+            this.utils.showError(err.error.message);
+          } else {
+            this.utils.showError(
+              'Ocorreu um erro no servidor, tente mais tarde.'
+            );
+          }
+          return throwError(() => err);
+        })
+      );
+  }
+
+  deleteIncome(id: string): Observable<DeleteIncome> {
+    return this.http
+      .delete<DeleteIncome>(environment.BASE_URL + '/delete/revenue/' + id)
+      .pipe(
+        catchError((err) => {
+          if (err.status === 0 && err.status !== 404) {
+            this.utils.showError(
+              'Ocorreu um erro na aplicação, tente novamente.'
+            );
+          } else if (err.status === 404) {
+            this.utils.showError(err.error.message);
+          } else {
+            this.utils.showError(
+              'Ocorreu um erro no servidor, tente mais tarde.'
+            );
+          }
+          return throwError(() => err);
+        })
+      );
+  }
+
+  updateIncome(id: string, payload: any): Observable<UpdateIncome> {
+    return this.http
+      .put<UpdateIncome>(
+        environment.BASE_URL + '/update/revenues' + id,
+        payload
+      )
+      .pipe(
         catchError((err) => {
           if (err.status === 0 && err.status !== 404) {
             this.utils.showError(

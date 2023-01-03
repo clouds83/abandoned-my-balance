@@ -22,6 +22,7 @@ import { CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
 import localePt from '@angular/common/locales/pt';
 import { ShortenerPipe } from 'src/app/shared/pipes/shortener.pipe';
 import { InputWidthDirective } from 'src/app/shared/input-width.directive';
+import { UpdateIncomeComponent } from './update-income/update-income.component';
 registerLocaleData(localePt, 'pt');
 
 export const CustomCurrencyMaskConfig = {
@@ -51,6 +52,7 @@ export const CustomCurrencyMaskConfig = {
     MonthsIncomeComponent,
     ShortenerPipe,
     InputWidthDirective,
+    UpdateIncomeComponent,
   ],
   imports: [
     CommonModule,

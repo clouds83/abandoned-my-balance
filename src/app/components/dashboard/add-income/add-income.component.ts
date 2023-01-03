@@ -49,19 +49,28 @@ export class AddIncomeComponent implements OnInit, OnDestroy {
 
     this.incomeList = [
       {
-        name: 'Salário',
+        name: 'Investimento',
       },
       {
-        name: 'Décimo terceiro',
+        name: 'Outros',
       },
       {
-        name: 'Rendimento',
+        name: 'Férias',
       },
       {
-        name: 'Décimo terceiro',
+        name: '13 Sálario',
+      },
+      {
+        name: 'PLR',
+      },
+      {
+        name: 'Aposentaria',
       },
       {
         name: 'Aluguel',
+      },
+      {
+        name: 'Salario',
       },
     ];
 
