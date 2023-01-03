@@ -4,7 +4,7 @@
         <div *ngIf="!emptyResult && !loading">
             <br>
             <label class="mat-label"><strong>Encontrar Receita:</strong></label>
-            <input matInput placeholder="Pesquisar Receita" />
+            <input matInput placeholder="Pesquisar Receita" (keyup)="applyFilter($event)" />
         </div>
         <button (click)="openDialog()" color="primary" class="btn-default btn btn-primary">
             Adicionar Receita
