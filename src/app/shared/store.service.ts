@@ -18,11 +18,11 @@ export class StoreService {
     return this.storeMonth.asObservable();
   }
 
-  setStoreRegisterIncome(value: boolean) {
+  setStoreIncome(value: boolean) {
     this.storeRegister.next(value);
   }
 
-  getStoreRegisterIncome() {
+  getStoreIncome() {
     return this.storeRegister.asObservable();
   }
 }

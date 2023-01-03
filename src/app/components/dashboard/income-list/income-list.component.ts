@@ -37,7 +37,7 @@ export class IncomeListComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.store.getStoreRegisterIncome().subscribe((res) => {
+    this.store.getStoreIncome().subscribe((res) => {
       if (res) {
         this.getIncomeList(this.selectedMonth);
       }

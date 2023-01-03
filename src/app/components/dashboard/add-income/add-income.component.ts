@@ -183,7 +183,7 @@ export class AddIncomeComponent implements OnInit, OnDestroy {
 
           this.api.addIncome(payload).subscribe();
 
-          this.store.setStoreRegisterIncome(true);
+          this.store.setStoreIncome(true);
 
           this.dialogRef.close();
         }
@@ -194,7 +194,7 @@ export class AddIncomeComponent implements OnInit, OnDestroy {
         // .pipe(takeUntil(this.destroy$))
         .subscribe((res: RegisterIncome) => {
           if (res) {
-            this.store.setStoreRegisterIncome(true);
+            this.store.setStoreIncome(true);
           }
         });
 
